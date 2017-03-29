@@ -1,0 +1,112 @@
+<!DOCTYPE ht
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>luobo</title>
+	<link rel="stylesheet" type="text/css" href="css/css.css">
+</head>
+<body>
+	<div id="container">
+		
+	</div>
+	<script>
+		function imgRun(){}
+		imgRun.prototype = {
+			container:null,//最外层容器
+			img_list:null,//图片列表
+			icon_list:null,//icon列表
+			count:0,//图片个数
+			index:0,//索引
+			width:0,//图片宽度
+			play:null,//定时器
+			img_url:[],//图片src
+			$:function(obj){
+				if(typeof(obj) === "string"){
+					if(obj.indexOf("#") >= 0){
+						obj = obj.replace("#","");
+						if(document.getElementById(obj)){
+							return document.getElementById(obj);
+						}else{
+							console.log("没有容器");
+						}
+					}else{
+						return document.createElement(obj);
+					}
+				}else{
+					return obj;
+				}
+			},
+			/*初始化dom*/
+			info:function(id){
+				this.container = this.$(id);
+				for(var i = 0;i < 2;i++){
+					var ul = this.$("ul");
+					for(var j =0;j < this.count;j++){
+						var li = this.$("li");
+						li.innerHTML = i==0?this.img_url[j]:"";
+						ul.appendChild(li);
+					}
+					this.container.appendChild(ul);
+				}
+				this.img_list = this.container.children[0];
+				this.icon_list = this.container.children[1].children;
+				this.container.children[1].className = "icon";
+				this.img_list.className = "img-list";
+				this.icon_list[0].className = "active";
+				this.width = this.img_list.clientWidth/this.count;
+			},
+			/*程序入口*/
+			action:function(id){
+				this.autoPlay();
+				this.mouseoverout(this.container,this.icon_list);
+			},
+			/*图片切换*/
+			imgShow:function(num,imgList,iconList){
+				this.index = num;
+				for(var i = 0;i < this.count;i++){
+					iconList[i].className = "";
+				}
+				iconList[this.index].className = "active";
+				imgList.style.left = -num * this.width + "px";				
+			},
+			/*自动播放*/
+			autoPlay:function(){
+				var _this = this;
+				this.play = setInterval(function(){
+					_this.index = _this.index === _this.count - 1?0:++_this.index;
+					_this.imgShow(_this.index,_this.img_list,_this.icon_list);
+				},3000);
+			},
+			/*绑定鼠标事件*/
+			mouseoverout:function(box,iconList){
+				var _this = this;
+				box.onmouseover = function(){
+					clearInterval(_this.play);
+				}
+				box.onmouseout = function(){
+					_this.autoPlay();
+				}
+				for(var i = 0;i < this.count;i++){
+					iconList[i].index = i;
+					iconList[i].onmouseover = function(){
+						_this.imgShow(this.index,_this.img_list,_this.icon_list);
+					}
+				}
+			}
+		}
+
+		window.onload = function(){
+			var img_run = new imgRun();
+			img_run.count = 5;
+			img_run.img_url=[
+			"<img src=\"images/1.png\"/>",
+			"<img src=\"images/2.png\"/>",
+			"<img src=\"images/3.png\"/>",
+			"<img src=\"images/4.png\"/>",
+			"<img src=\"images/5.png\"/>"];
+			img_run.info("#container");
+			img_run.action("#container");
+		}
+	</script>
+</body>
+</html>

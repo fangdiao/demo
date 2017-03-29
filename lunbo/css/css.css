@@ -1,0 +1,50 @@
+* {
+	margin: 0;
+	padding:0;
+}
+#container {
+	width: 500px;
+	height: 300px;
+	position: relative;
+	/* background: black; */
+	left: 200px;
+	top: 100px;
+	overflow: hidden;
+}
+
+#container .img-list {
+	width: 500%;
+	height: 300px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	margin-left:0;
+}
+
+
+#container .img-list li {
+	width: 500px;
+	list-style: none;
+	float: left;
+}
+
+#container .icon {
+	width: 100%;
+	position: absolute;
+	left: 0;
+	bottom:10px;
+	text-align: center;
+}
+
+#container .icon li {
+	list-style: none;
+	width: 40px;
+	height: 8px;
+	background-color: #000;
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.active {
+	background: red !important;
+}
