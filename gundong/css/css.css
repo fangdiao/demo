@@ -1,0 +1,37 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.box {
+	position: relative;
+	left: 100px;
+	top: 50px;
+	width: 1000px;
+	height: 500px;
+	overflow: hidden;
+	border:1px solid #000;
+}
+
+.box #container {
+	position: absolute;
+	left: 0;
+	top: 140px;
+	width: 6000px;
+	height: 220px;
+}
+
+.box ul {
+	width: 1550px;
+	height: 220px;
+	float: left;
+}
+
+.box ul li {
+	list-style: none;
+	width: 300px;
+	height: 200px;
+	float: left;
+	margin-right: -10px;
+	border:10px solid #eeeeee;
+}
