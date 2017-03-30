@@ -18,7 +18,9 @@
 			count:0,//图片个数
 			index:0,//索引
 			width:0,//图片宽度
-			play:null,//定时器
+			timer:null,//单个图片滚动定时器
+			play:null,//自动播放定时器
+			is_move:true,//是否在动画
 			img_url:[],//图片src
 			$:function(obj){
 				if(typeof(obj) === "string"){
@@ -53,7 +55,11 @@
 				this.container.children[1].className = "icon";
 				this.img_list.className = "img-list";
 				this.icon_list[0].className = "active";
-				this.width = this.img_list.clientWidth/this.count;
+				this.width = this.img_list.clientWidth/(this.count + 1);
+				/*再添加一张图片，无缝播放*/
+				var li = this.$("li");
+				li.innerHTML = this.img_url[0];
+				this.img_list.appendChild(li);
 			},
 			/*程序入口*/
 			action:function(id){
@@ -62,18 +68,34 @@
 			},
 			/*图片切换*/
 			imgShow:function(num,imgList,iconList){
+				this.is_move = true;
 				this.index = num;
 				for(var i = 0;i < this.count;i++){
 					iconList[i].className = "";
 				}
-				iconList[this.index].className = "active";
-				imgList.style.left = -num * this.width + "px";				
+				if(this.index === this.count){
+					iconList[0].className = "active";
+				}else{
+					iconList[this.index].className = "active";
+				}
+				var _this = this;
+				this.timer = setInterval(function(){
+					var speed = Math.ceil((imgList.offsetLeft + _this.index * _this.width)/10);
+					imgList.style.left = imgList.offsetLeft - speed + "px";
+					if(speed === 0){
+						if(_this.index === _this.count){
+							imgList.style.left = 0 + "px";
+						}
+						_this.is_move = false;
+						clearInterval(_this.timer);	
+					}
+				},10);			
 			},
 			/*自动播放*/
 			autoPlay:function(){
 				var _this = this;
 				this.play = setInterval(function(){
-					_this.index = _this.index === _this.count - 1?0:++_this.index;
+					_this.index = _this.index === _this.count?1:++_this.index;
 					_this.imgShow(_this.index,_this.img_list,_this.icon_list);
 				},3000);
 			},
@@ -89,7 +111,11 @@
 				for(var i = 0;i < this.count;i++){
 					iconList[i].index = i;
 					iconList[i].onmouseover = function(){
-						_this.imgShow(this.index,_this.img_list,_this.icon_list);
+						if(!_this.is_move){
+							_this.imgShow(this.index,_this.img_list,_this.icon_list);
+						}else{
+							return false;
+						}
 					}
 				}
 			}
