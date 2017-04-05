@@ -1,0 +1,111 @@
+* {
+	margin: 0;
+	padding:0;
+}
+
+.container {
+	position: relative;
+	width: 100%;
+	height: 100%;
+  position: fixed;
+  left: 0;
+  top:0;
+  background: #000;
+  opacity: 0.5;
+  filter: alpha(opacity = 50);
+}
+
+.box {
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  left: 0;
+  right:0;
+  top: 0;
+  bottom:0;
+  margin: auto;
+  border:5px solid #fff;
+  border-radius: 3px;
+  overflow: hidden;
+  background:#fff;
+  background-size: 100%;
+}
+
+.box img {
+	width:auto;
+  height:auto;
+  max-width:100%;
+  max-height:100%;
+}
+
+.box .icon {
+  position: absolute;
+  top: 0;
+  cursor: pointer;
+  width: 35%;
+  height: 100%;
+}
+.box .to-left {
+  left: 0;
+  background: url(../images/icon/prev.png) left center no-repeat;
+}
+
+.box .to-right {
+  right: 0;
+  background: url(../images/icon/next.png) right center no-repeat;
+}
+
+.box ul {
+  position: absolute;
+  left: 0;
+  bottom: 55px;
+  width: 100%;
+  text-align: center;
+}
+
+.box ul li {
+  cursor: pointer;
+  display: inline-block;
+  border:6px solid #ccc;
+  border-radius: 100%;
+  box-shadow: 0 0 10px #eee;
+  margin-right: 8px;
+}
+
+.box .img-title {
+  width: 100%;
+  height: 30px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: #555;
+}
+
+.box p {
+  width: 100%;
+  padding: 5px 0 5px 10px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 30px;
+  font-size: 14px;
+  color: #fff;  
+  background: #666;
+  opacity: 0.8;
+  filter: alpha(opacity = 80);
+}
+
+#close-box {
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;  
+  width: 27px;
+  height: 27px;
+  background: url(../images/icon/close.png) right bottom no-repeat;
+}
+
+.box .light-box-active {
+  border-color: #333;
+}
